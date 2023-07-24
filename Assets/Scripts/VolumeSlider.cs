@@ -11,7 +11,9 @@ public class VolumeSlider : MonoBehaviour
     void Start()
     {
         audioSource = audioSource.GetComponent<AudioSource>();
-        audioSource.volume = volumeSlider.value;
+        audioSource.volume = VolumeManager.masterVolume;
+        // Set the initial position of the slider to match the masterVolume value
+        volumeSlider.value = VolumeManager.masterVolume;
     }
 
     // Update is called once per frame
@@ -21,14 +23,15 @@ public class VolumeSlider : MonoBehaviour
     }
     void OnEnable()
     {
-        //Register Slider Events
-        volumeSlider.onValueChanged.AddListener(delegate { changeVolume(volumeSlider.value); });
+        volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(volumeSlider.value); });
+        
     }
 
-    //Called when Slider is moved
-    void changeVolume(float sliderValue)
+    // Called when Slider is moved
+    void ChangeVolume(float sliderValue)
     {
-        audioSource.volume = sliderValue;
+        VolumeManager.masterVolume = volumeSlider.value;
+        audioSource.volume = VolumeManager.masterVolume;
     }
-
+    
 }
