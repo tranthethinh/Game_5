@@ -1,10 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class VolumeManager : MonoBehaviour
+public class PersistentAudio : MonoBehaviour
 {
-    public static float masterVolume = 1.0f; // Default volume value (can be adjusted in the Inspector)
-
-    private static VolumeManager instance;
+    private static PersistentAudio instance;
 
     private void Awake()
     {

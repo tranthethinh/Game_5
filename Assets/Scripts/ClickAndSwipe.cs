@@ -10,6 +10,7 @@ public class ClickAndSwipe : MonoBehaviour
     private TrailRenderer trail;
     private BoxCollider col;
     private bool swiping = false;
+    public AudioSource audioSlash;
     // Start is called before the first frame update
     void Awake()
     {
@@ -20,11 +21,14 @@ public class ClickAndSwipe : MonoBehaviour
         col.enabled = false;
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
     }
-
+    private void Start()
+    {
+        audioSlash = GetComponent<AudioSource>();
+    }
     // Update is called once per frame
     void Update()
     {
-        if (gameManager.isGameActive)
+        if (gameManager.isGameActive && !gameManager.isPaused)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -54,6 +58,7 @@ public class ClickAndSwipe : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Target>())
         { //Destroy the target 
+            audioSlash.Play();
             collision.gameObject.GetComponent<Target>().DestroyTarget();
         }
     }

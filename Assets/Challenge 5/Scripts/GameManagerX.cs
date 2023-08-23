@@ -13,8 +13,9 @@ public class GameManagerX : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI gameOverText;
     public GameObject titleScreen;
-    public Button restartButton; 
-
+    public GameObject scoreTime;
+    public Button restartButton;
+    public AudioSource audioTap;
     public List<GameObject> targetPrefabs;
 
     private int score;
@@ -34,7 +35,8 @@ public class GameManagerX : MonoBehaviour
         score = 0;
         UpdateScore(0);
         titleScreen.SetActive(false);
-
+        scoreTime.SetActive(true);
+        audioTap = GetComponent<AudioSource>();
         StartCoroutine(ActivateTimer());
     }
 
@@ -74,8 +76,10 @@ public class GameManagerX : MonoBehaviour
     // Update score with value from target clicked
     public void UpdateScore(int scoreToAdd)
     {
+        
         score += scoreToAdd;
         scoreText.text = "Score:"+score;
+        audioTap.Play();
     }
 
     // Stop game, bring up game over text and restart button
@@ -100,7 +104,7 @@ public class GameManagerX : MonoBehaviour
                 break;
             }
             yield return new WaitForSeconds(1);
-            timeText.text = "Time left: " + timerTime--;
+            timeText.text = "Time: " + timerTime--;
         }
         GameOver();
     }
